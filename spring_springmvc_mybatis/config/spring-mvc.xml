@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+        <!-- 控制器 bean   name  就是页面请求路径-->
+        
+		   <!-- 扫描注解 -->
+        <context:component-scan base-package="com.gxa.controller"></context:component-scan>
+
+        <!-- 启动MVC 注解模式   -->
+        <mvc:annotation-driven >
+        <!-- 引用 -->
+            <mvc:message-converters>
+              <ref bean="stringHttpMessageConverter"/>
+             <ref bean="mappingJackson2HttpMessageConverter"/>
+            </mvc:message-converters>
+        </mvc:annotation-driven>
+       <!--静态 目录  可被访问 -->
+          <mvc:resources location="/" mapping="/**"></mvc:resources> 
+       
+       <!-- 返回的数据  要配置 数据转换器  转换JSON -->
+       <bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
+       <!--	各种数据类型 的格式-->
+       	<property name="supportedMediaTypes">
+       		<list>
+       			<value> text/plain;charset=utf-8</value>
+       			<value>application/json;charset=utf-8</value>
+       		</list>
+       	</property>
+       </bean>
+      
+      
+      <!-- 设置 jackJSon -->
+      <bean  id="mappingJackson2HttpMessageConverter"  class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+      	 <!--  各种数据类型 的格式 -->
+       	<property name="supportedMediaTypes">
+       		<list>
+       			<value> text/JavaScript;charset=utf-8</value>
+       			<value> text/xml;charset=utf-8</value>
+       			<value> text/html;charset=utf-8</value>
+       			<value> text/plain;charset=utf-8</value>
+       			<value>application/json;charset=utf-8</value>
+       			<value>application/xml;charset=utf-8</value>
+       		</list>
+       	</property>
+      
+      </bean>  
+      <!-- 配置文件解析器 -->
+      <bean name="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+      	<!-- 上传大小设置 -->
+      		<property name="maxUploadSize">
+      			<value>102400</value><!-- 1024kb=1M  1024M=1G -->
+      		</property>
+      </bean>
+      
+     
+ </beans>

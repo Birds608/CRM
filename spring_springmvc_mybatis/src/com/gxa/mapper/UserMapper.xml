@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 
+	namespace唯一表示此名字下的crud语句
+ -->
+<mapper namespace="com.gxa.mapper.UserMapper">
+	
+		<select id="login" parameterType="com.gxa.model.User" resultType="com.gxa.model.User">
+		  select  id,nick,password from user where id=#{id} and password=#{password}
+		</select>
+	
+</mapper>
